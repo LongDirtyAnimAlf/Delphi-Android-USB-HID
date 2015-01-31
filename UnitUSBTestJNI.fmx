@@ -1,0 +1,63 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form2'
+  ClientHeight = 518
+  ClientWidth = 308
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  DesignerMasterStyle = 0
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    Align = Client
+    Size.Width = 308.000000000000000000
+    Size.Height = 328.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    TextSettings.WordWrap = True
+  end
+  object btnHIDCreate: TButton
+    Align = Bottom
+    Position.Y = 328.000000000000000000
+    Size.Width = 308.000000000000000000
+    Size.Height = 56.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 2
+    Text = 'Create HID controller'
+    OnClick = btnHIDCreateClick
+  end
+  object btnHIDEnable: TButton
+    Align = Bottom
+    Enabled = False
+    Position.Y = 384.000000000000000000
+    Size.Width = 308.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 4
+    Text = 'Enable HID controller'
+    OnClick = btnHIDEnableClick
+  end
+  object btnGetSerial: TButton
+    Align = Bottom
+    Enabled = False
+    Position.Y = 432.000000000000000000
+    Size.Width = 308.000000000000000000
+    Size.Height = 48.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 6
+    Text = 'Get serial of first HID device'
+    OnClick = btnGetSerialClick
+  end
+  object btnInfo: TButton
+    Align = Bottom
+    Enabled = False
+    Position.Y = 480.000000000000000000
+    Size.Width = 308.000000000000000000
+    Size.Height = 38.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 7
+    Text = 'USB info'
+    OnClick = btnInfoClick
+  end
+end

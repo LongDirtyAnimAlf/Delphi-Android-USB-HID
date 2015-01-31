@@ -15,6 +15,7 @@ uses
   Androidapi.JNI.App;
 //  android.app.PendingIntent;
 
+
 type
   JUsbManager = interface;
 

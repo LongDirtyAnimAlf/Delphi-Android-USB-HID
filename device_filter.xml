@@ -14,5 +14,5 @@
      limitations under the License.
 -->
 <resources>
-	<usb-device vendor-id="1240" product-id="63"/>
+	<usb-device vendor-id="1240" product-id="63"/>  // Microchip USB HID
 </resources>
