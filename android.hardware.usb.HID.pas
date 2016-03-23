@@ -122,6 +122,7 @@ type
     function GetProductName: String;
     function GetSerialNumber: String;
     function GetDeviceString(Idx: Byte): string;
+    function GetFeatureReport: string;
     procedure SetDataEvent(const DataEvent: TJvHidDataEvent);
     procedure SetThreadSleepTime(const SleepTime: Integer);
     procedure StartThread;
@@ -711,6 +712,8 @@ end;
 function TJvHidDevice.GetDeviceString(Idx: Byte): string;
 const
   STD_USB_REQUEST_GET_DESCRIPTOR = $06;
+  STD_USB_REQUEST_GET_REPORT = $01;
+  LIBUSB_FEATURE_REPORT = $0301; //Feature report, ID = 1
   LIBUSB_DT_STRING = $03;
 var
   i,rdo:integer;
@@ -762,6 +765,54 @@ begin
   end
   else result:='';
 end;
+
+function TJvHidDevice.GetFeatureReport: string;
+const
+  STD_USB_REQUEST_RECIPIENT = $01; // Interface
+  STD_USB_REQUEST_GET_REPORT = $01; //HID GET_REPORT
+  STD_USB_REQUEST_SET_REPORT = $09; //HID SET_REPORT
+  LIBUSB_FEATURE_REPORT = $0301; //Feature report ($0300), ID = 1 ($01)
+  LIBUSB_FEATURE_REPORT_LENGTH = $FF;
+var
+  i,rdo:integer;
+  buffer : TJavaArray<Byte>;
+  S : String;
+begin
+
+  if Openfile then
+  begin
+
+    buffer := TJavaArray<Byte>.Create(255);
+
+    rdo := FUsbDeviceConnection.controlTransfer(
+           (TJUsbConstantsUSB_DIR_IN OR TJUsbConstantsUSB_TYPE_CLASS OR STD_USB_REQUEST_RECIPIENT),
+           STD_USB_REQUEST_GET_REPORT,
+           LIBUSB_FEATURE_REPORT,
+           0,
+           buffer,
+           LIBUSB_FEATURE_REPORT_LENGTH,
+           2000);
+
+    if rdo<0 then
+    begin
+      buffer.Free;
+      result:='';
+      exit;
+    end;
+
+    if rdo>255 then rdo:=255;
+
+    S:='';
+    for i:=0 to rdo do
+    begin
+      S:=S+Char(buffer.Items[i]);
+    end;
+    result:=S;
+    buffer.Free;
+  end
+  else result:='';
+end;
+
 
 function TJvHidDevice.GetVendorName: String;
 begin
